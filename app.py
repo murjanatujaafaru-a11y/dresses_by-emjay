@@ -29,7 +29,7 @@ with st.form("sizing_form"):
         "Hip Measurement", min_value=20.0, max_value=60.0, value=40.0, step=0.5
     )
 
-    submitted = st.form_submit_button("✨ Get Sizing Recommendation")
+    submitted = st.form_submit_button("✨ Dresses by Emjay")
 
 
 # --- 2. SIZING LOGIC & WHATSAPP ROUTING ---
