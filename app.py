@@ -68,7 +68,7 @@ if submitted:
         encoded_message = urllib.parse.quote(raw_message)
 
         # Replace 2348000000000 with your actual business phone number (including country code, no + sign)
-        whatsapp_number = "2348000000000"
+        whatsapp_number = "2348136749494"
         whatsapp_url = (
             f"https://wa.me/{whatsapp_number}?text={encoded_message}"
         )
