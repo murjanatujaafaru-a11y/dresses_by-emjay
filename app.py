@@ -55,15 +55,18 @@ st.markdown(
         font-weight: 600 !important;
     }
 
+    /* --- INPUT BARS STYLING (WHITE BACKGROUND, DARK BROWN BORDER & TEXT) --- */
     div[data-baseweb="input"] > div,
-    div[data-baseweb="select"] > div {
-        background-color: #FAF6F0 !important;
+    div[data-baseweb="select"] > div,
+    div[data-baseweb="base-input"] {
+        background-color: #FFFFFF !important;
         border: 2px solid #3D2314 !important;
         border-radius: 8px !important;
         color: #3D2314 !important;
     }
 
     input, textarea, div[data-baseweb="select"] * {
+        background-color: #FFFFFF !important;
         color: #3D2314 !important;
         font-weight: 500 !important;
     }
@@ -113,7 +116,7 @@ FABRIC_DETAILS = {
     "Brocade": {
         "stretchy": "Non-stretchy (Rigid & Structured)",
         "desc": "Rich, woven pattern that holds sharp silhouettes beautifully. Perfect for statement ceremonial wear.",
-        "image": "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=600&q=80",  # Replace with your own image URL or local path e.g. "images/brocade.jpg"
+        "image": "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=600&q=80",
     },
     "Mikado": {
         "stretchy": "Non-stretchy (High Structure & Subtle Sheen)",
