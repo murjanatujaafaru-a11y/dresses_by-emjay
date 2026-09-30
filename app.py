@@ -61,26 +61,6 @@ st.markdown(
         font-weight: 600 !important;
     }
 
-    /* --- INPUT BARS STYLING (DARK BROWN BORDERS & TEXT) --- */
-    div[data-baseweb="input"] > div,
-    div[data-baseweb="select"] > div {
-        background-color: #FAF6F0 !important;
-        border: 2px solid #3D2314 !important;
-        border-radius: 8px !important;
-        color: #3D2314 !important;
-    }
-
-    input, textarea, div[data-baseweb="select"] * {
-        color: #3D2314 !important;
-        font-weight: 500 !important;
-    }
-
-    div[data-baseweb="input"]:focus-within > div,
-    div[data-baseweb="select"]:focus-within > div {
-        border-color: #8C6239 !important;
-        box-shadow: 0 0 0 1px #8C6239 !important;
-    }
-
     /* Primary Form Submit Button (Dark Brown Accent) */
     .stButton>button {
         background-color: #3D2314 !important; /* Dark Brown */
