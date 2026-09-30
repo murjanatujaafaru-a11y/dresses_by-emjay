@@ -7,45 +7,81 @@ st.set_page_config(
     layout="centered",
 )
 
-# --- CUSTOM BRAND COLOURS & STYLING ---
+# --- CALLIGRAPHY & CARTON/DARK BROWN CUSTOM STYLING ---
 st.markdown(
     """
     <style>
-    /* Main Background Gradient */
+    /* Import Google Fonts for Calligraphy Header & Clean Body Font */
+    @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,600;1,400&family=Poppins:wght@300;400;600&display=swap');
+
+    /* Main App Background (Warm Soft Beige/Warm Ivory) */
     .stApp {
-        background: linear-gradient(180deg, #FFF0F5 0%, #FFFFFF 100%);
+        background-color: #FAF6F0;
+        color: #3D2314;
+        font-family: 'Poppins', sans-serif;
     }
-    
-    /* Headers Styling */
-    h1 {
-        color: #880E4F !important;
+
+    /* Main Title Calligraphy Style */
+    .brand-title {
+        font-family: 'Great Vibes', cursive;
+        color: #3D2314;
+        font-size: 58px !important;
+        text-align: center;
+        margin-bottom: -10px;
+        font-weight: normal;
+    }
+
+    .brand-subtitle {
         font-family: 'Playfair Display', serif;
+        color: #8C6239;
+        font-size: 22px;
+        text-align: center;
+        font-style: italic;
+        margin-bottom: 20px;
     }
-    h2, h3 {
-        color: #AD1457 !important;
+
+    /* Section Headings in Dark Brown Calligraphy/Serif Style */
+    h1, h2, h3 {
+        color: #3D2314 !important;
+        font-family: 'Playfair Display', serif !important;
     }
-    
-    /* Form Container Box */
+
+    /* Form Container (Carton Brown Border & Background) */
     [data-testid="stForm"] {
         background-color: #FFFFFF;
-        border: 2px solid #F8BBD0;
-        border-radius: 15px;
-        padding: 25px;
-        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.05);
+        border: 2px solid #C4A482; /* Carton Brown */
+        border-radius: 16px;
+        padding: 28px;
+        box-shadow: 0px 6px 16px rgba(61, 35, 20, 0.08);
+    }
+
+    /* Input Labels in Dark Brown */
+    label {
+        color: #3D2314 !important;
+        font-weight: 600 !important;
+    }
+
+    /* Primary Form Submit Button (Dark Brown Accent) */
+    .stButton>button {
+        background-color: #3D2314 !important; /* Dark Brown */
+        color: #FAF6F0 !important;
+        border-radius: 25px !important;
+        font-size: 16px !important;
+        font-weight: 600 !important;
+        border: none !important;
+        padding: 10px 24px !important;
+        transition: all 0.3s ease-in-out;
     }
     
-    /* Submit Button Styling */
-    .stButton>button {
-        background-color: #D81B60 !important;
-        color: white !important;
-        border-radius: 20px !important;
-        font-weight: bold !important;
-        border: none !important;
-        transition: all 0.3s ease;
-    }
     .stButton>button:hover {
-        background-color: #AD1457 !important;
-        transform: scale(1.02);
+        background-color: #8C6239 !important; /* Carton Brown on Hover */
+        color: #FFFFFF !important;
+        transform: translateY(-2px);
+    }
+
+    /* Divider Lines */
+    hr {
+        border-color: #C4A482 !important;
     }
     </style>
     """,
@@ -53,10 +89,10 @@ st.markdown(
 )
 
 # --- BRANDING HEADER ---
-st.title("👗 Dresses by Emjay")
-st.subheader("SmartFit Style & Sizing Advisor")
+st.markdown('<p class="brand-title">Dresses by Emjay</p>', unsafe_allow_html=True)
+st.markdown('<p class="brand-subtitle">SmartFit Style & Sizing Advisor</p>', unsafe_allow_html=True)
 st.write(
-    "Welcome! Find your perfect tailored fit, fabric stretch guide, and styling advice for our ready-to-wear collection."
+    "Welcome! Find your perfect tailored fit, fabric stretch guide, and custom styling advice for our ready-to-wear collection."
 )
 
 st.divider()
@@ -211,19 +247,21 @@ if submitted:
             f"https://wa.me/{whatsapp_number}?text={encoded_message}"
         )
 
+        # Custom Dark Brown WhatsApp Action Button
         st.markdown(
             f"""
-            <a href="{whatsapp_url}" target="_blank">
+            <a href="{whatsapp_url}" target="_blank" style="text-decoration: none;">
                 <button style="
-                    background-color: #25D366;
-                    color: white;
-                    padding: 12px 24px;
-                    border: none;
-                    border-radius: 8px;
+                    background-color: #3D2314;
+                    color: #FAF6F0;
+                    padding: 14px 24px;
+                    border: 2px solid #C4A482;
+                    border-radius: 12px;
                     font-size: 16px;
                     font-weight: bold;
                     cursor: pointer;
-                    width: 100%;">
+                    width: 100%;
+                    transition: all 0.3s ease;">
                     💬 Send Order & Custom Styling Details to Dresses by Emjay
                 </button>
             </a>
