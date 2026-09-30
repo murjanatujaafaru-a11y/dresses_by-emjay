@@ -7,6 +7,51 @@ st.set_page_config(
     layout="centered",
 )
 
+# --- CUSTOM BRAND COLOURS & STYLING ---
+st.markdown(
+    """
+    <style>
+    /* Main Background Gradient */
+    .stApp {
+        background: linear-gradient(180deg, #FFF0F5 0%, #FFFFFF 100%);
+    }
+    
+    /* Headers Styling */
+    h1 {
+        color: #880E4F !important;
+        font-family: 'Playfair Display', serif;
+    }
+    h2, h3 {
+        color: #AD1457 !important;
+    }
+    
+    /* Form Container Box */
+    [data-testid="stForm"] {
+        background-color: #FFFFFF;
+        border: 2px solid #F8BBD0;
+        border-radius: 15px;
+        padding: 25px;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.05);
+    }
+    
+    /* Submit Button Styling */
+    .stButton>button {
+        background-color: #D81B60 !important;
+        color: white !important;
+        border-radius: 20px !important;
+        font-weight: bold !important;
+        border: none !important;
+        transition: all 0.3s ease;
+    }
+    .stButton>button:hover {
+        background-color: #AD1457 !important;
+        transform: scale(1.02);
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
 # --- BRANDING HEADER ---
 st.title("👗 Dresses by Emjay")
 st.subheader("SmartFit Style & Sizing Advisor")
