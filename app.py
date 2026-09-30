@@ -11,7 +11,7 @@ st.set_page_config(
 st.title("👗 Dresses by Emjay")
 st.subheader("SmartFit Style & Sizing Advisor")
 st.write(
-    "Welcome! Find your perfect tailored fit for our ready-to-wear collection in under 30 seconds."
+    "Welcome! Find your perfect tailored fit and fabric guide for our ready-to-wear collection in under 30 seconds."
 )
 
 st.divider()
@@ -35,10 +35,10 @@ with st.form("sizing_form"):
         "Hip Measurement", min_value=20.0, max_value=60.0, value=40.0, step=0.5
     )
 
-    submitted = st.form_submit_button("✨ Get Sizing Recommendation")
+    submitted = st.form_submit_button("✨ Get Sizing & Style Recommendation")
 
 
-# --- 2. SIZING LOGIC & WHATSAPP ROUTING ---
+# --- 2. SIZING LOGIC, ADVICE & WHATSAPP ROUTING ---
 if submitted:
     if not customer_name:
         st.error("Please enter your name before getting a recommendation.")
@@ -55,25 +55,54 @@ if submitted:
         else:
             recommended_size = "UK 16+"
 
-        # Display Result on Screen
+        # Dynamic Fit & Fabric Logic
+        fit_style = "Structured Corporate Fit & Tailored Silhouette"
+        
+        # Determine proportions for custom fit advice
+        if hip - waist >= 12:
+            fit_advice = "You have an hourglass proportion. A fitted waistline with an A-line or flared skirt silhouette will accommodate your hips comfortably without pulling."
+        elif bust - waist <= 4 and hip - waist <= 4:
+            fit_advice = "You have a straight silhouette. Structured cuts, belted waistlines, and high-neck modest designs will add definition."
+        else:
+            fit_advice = "Standard corporate tailored fit. Offers clean structure through the bust and waist while maintaining modesty and comfort."
+
+        recommended_fabrics = [
+            "**Mikado / Jacquard:** Ideal for structured corporate dresses that hold their shape crisp throughout the day.",
+            "**Silk / Silk Satin:** Perfect for fluid draping, modest evening wear, and high-comfort corporate fits.",
+            "**Brocade:** Recommended for statement ceremonial or high-end modest corporate pieces."
+        ]
+
+        # --- DISPLAY RESULTS ON APP UI ---
         st.success(
             f"Hi **{customer_name}**! Based on your measurements, your recommended size for **Dresses by Emjay** is **{recommended_size}**."
         )
 
-        # Build Pre-filled WhatsApp Message featuring the Brand Name
+        # Style & Fabric Details Section
+        st.subheader("👗 Fit & Fabric Recommendation")
+        st.markdown(f"**Fit Style:** {fit_style}")
+        st.info(f"💡 **Tailored Fit Advice:** {fit_advice}")
+
+        st.markdown("**Recommended Fabrics for Your Fit:**")
+        for fab in recommended_fabrics:
+            st.markdown(f"- {fab}")
+
+        st.divider()
+
+        # Build Pre-filled WhatsApp Message featuring size + style details
         raw_message = (
             f"Hi Dresses by Emjay! My name is {customer_name} from {location}.\n\n"
             f"I used your SmartFit Advisor and my recommended size is *{recommended_size}*.\n"
             f"• Bust: {bust}\"\n"
             f"• Waist: {waist}\"\n"
             f"• Hip: {hip}\"\n\n"
+            f"Fit Style: {fit_style}\n\n"
             f"I would like to place an order from your latest collection!"
         )
 
         # Encode text safely for web URLs
         encoded_message = urllib.parse.quote(raw_message)
 
-        # Replace with your actual WhatsApp phone number (country code first, no + sign)
+        # WhatsApp phone number
         whatsapp_number = "2348136749494"
         whatsapp_url = (
             f"https://wa.me/{whatsapp_number}?text={encoded_message}"
