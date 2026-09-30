@@ -1,3 +1,4 @@
+import os
 import urllib.parse
 import streamlit as st
 
@@ -111,27 +112,27 @@ st.write(
 
 st.divider()
 
-# --- FABRIC DATABASE WITH ACCURATE FABRIC IMAGES ---
+# --- FABRIC DATABASE USING LOCAL IMAGES ---
 FABRIC_DETAILS = {
     "Brocade": {
         "stretchy": "Non-stretchy (Rigid & Structured)",
         "desc": "Rich, raised pattern woven with metallic or contrast threads that holds sharp silhouettes beautifully. Ideal for statement ceremonial wear.",
-        "image": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&q=80",
+        "image": "images/brocade.jpg",
     },
     "Mikado": {
         "stretchy": "Non-stretchy (High Structure & Subtle Sheen)",
         "desc": "Heavyweight architectural silk-blend twill fabric ideal for clean corporate cuts, structured pleats, and tailored modest dresses.",
-        "image": "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?w=600&q=80",
+        "image": "images/mikado.jpg",
     },
     "Jacquard": {
         "stretchy": "Non-stretchy / Low stretch",
         "desc": "Textured luxury fabric with subtle pattern depth woven directly into the weave. Maintains crisp shapes throughout the workday.",
-        "image": "https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?w=600&q=80",
+        "image": "images/jacquard.jpg",
     },
     "Silk / Silk Satin": {
         "stretchy": "Low stretch / Bias-cut flexibility",
         "desc": "Smooth, fluid, lustrous, and highly breathable. Drapes elegantly for evening wear, bias cuts, and relaxed fits.",
-        "image": "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=600&q=80",
+        "image": "images/silk.jpg",
     },
 }
 
@@ -185,7 +186,6 @@ if submitted:
     if not customer_name:
         st.error("Please enter your name before getting a recommendation.")
     else:
-        # Sizing Calculation Logic
         if bust <= 34 and waist <= 26:
             recommended_size = "UK 8"
         elif bust <= 36 and waist <= 28:
@@ -197,11 +197,9 @@ if submitted:
         else:
             recommended_size = "UK 16+"
 
-        # Fabric stretch & details
         fabric_info = FABRIC_DETAILS[fabric_choice]
         is_stretchy = fabric_info["stretchy"]
 
-        # Stretch-based sizing caution
         if "Non-stretchy" in is_stretchy and fit_choice == "Fitted / Tailored":
             stretch_advice = (
                 f"**Note on Fabric:** {fabric_choice} is **{is_stretchy}**. "
@@ -211,7 +209,6 @@ if submitted:
         else:
             stretch_advice = f"**Fabric Stretch:** {fabric_choice} is **{is_stretchy}**. Works exceptionally well with a {fit_choice.lower()} cut."
 
-        # Accessory pairing logic based on Event & Fabric Choice
         if "Weddings" in event_choice or fabric_choice in ["Brocade", "Jacquard"]:
             accessory_advice = (
                 "- **Jewelry:** Statement gold or pearl earrings to match the rich texture of the fabric.\n"
@@ -224,29 +221,31 @@ if submitted:
                 "- **Handbag:** Structured leather tote or clean executive handbag.\n"
                 "- **Footwear:** Classic pumps or block heels for all-day comfort."
             )
-        else:  # Dinner / Evening / Silk
+        else:
             accessory_advice = (
                 "- **Jewelry:** Delicate drop earrings or a dainty pendant necklace that complements the neckline.\n"
                 "- **Handbag:** Sleek satin clutch or minimalist chain bag.\n"
                 "- **Footwear:** Strappy heels or elegant mule slippers."
             )
 
-        # --- DISPLAY RESULTS ON APP UI ---
         st.success(
             f"Hi **{customer_name}**! Your recommended size for **Dresses by Emjay** is **{recommended_size}**."
         )
 
         st.subheader("🧵 Fabric Stretch & Texture Analysis")
         
-        # Display Fabric Image and Text Side-by-Side using Columns
         img_col, text_col = st.columns([1, 2])
         
         with img_col:
-            st.image(
-                fabric_info["image"],
-                caption=f"{fabric_choice} Texture Preview",
-                use_container_width=True,
-            )
+            img_path = fabric_info["image"]
+            if os.path.exists(img_path):
+                st.image(
+                    img_path,
+                    caption=f"{fabric_choice} Swatch",
+                    use_container_width=True,
+                )
+            else:
+                st.info(f"📷 Please place `{img_path}` in your images folder.")
             
         with text_col:
             st.write(f"**Selected Fabric:** {fabric_choice}")
@@ -259,7 +258,6 @@ if submitted:
 
         st.divider()
 
-        # Build Pre-filled WhatsApp Message
         raw_message = (
             f"Hi Dresses by Emjay! My name is {customer_name} from {location}.\n\n"
             f"I used your SmartFit Advisor and here are my order details:\n"
