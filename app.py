@@ -11,17 +11,14 @@ st.set_page_config(
 st.markdown(
     """
     <style>
-    /* Import Google Fonts for Calligraphy Header & Clean Body Font */
     @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,600;1,400&family=Poppins:wght@300;400;600&display=swap');
 
-    /* Main App Background (Warm Soft Beige/Warm Ivory) */
     .stApp {
         background-color: #FAF6F0;
         color: #3D2314;
         font-family: 'Poppins', sans-serif;
     }
 
-    /* Main Title Calligraphy Style */
     .brand-title {
         font-family: 'Great Vibes', cursive;
         color: #3D2314;
@@ -40,30 +37,45 @@ st.markdown(
         margin-bottom: 20px;
     }
 
-    /* Section Headings in Dark Brown Calligraphy/Serif Style */
     h1, h2, h3 {
         color: #3D2314 !important;
         font-family: 'Playfair Display', serif !important;
     }
 
-    /* Form Container (Carton Brown Border & Background) */
     [data-testid="stForm"] {
         background-color: #FFFFFF;
-        border: 2px solid #C4A482; /* Carton Brown */
+        border: 2px solid #C4A482;
         border-radius: 16px;
         padding: 28px;
         box-shadow: 0px 6px 16px rgba(61, 35, 20, 0.08);
     }
 
-    /* Input Labels in Dark Brown */
     label {
         color: #3D2314 !important;
         font-weight: 600 !important;
     }
 
-    /* Primary Form Submit Button (Dark Brown Accent) */
+    div[data-baseweb="input"] > div,
+    div[data-baseweb="select"] > div {
+        background-color: #FAF6F0 !important;
+        border: 2px solid #3D2314 !important;
+        border-radius: 8px !important;
+        color: #3D2314 !important;
+    }
+
+    input, textarea, div[data-baseweb="select"] * {
+        color: #3D2314 !important;
+        font-weight: 500 !important;
+    }
+
+    div[data-baseweb="input"]:focus-within > div,
+    div[data-baseweb="select"]:focus-within > div {
+        border-color: #8C6239 !important;
+        box-shadow: 0 0 0 1px #8C6239 !important;
+    }
+
     .stButton>button {
-        background-color: #3D2314 !important; /* Dark Brown */
+        background-color: #3D2314 !important;
         color: #FAF6F0 !important;
         border-radius: 25px !important;
         font-size: 16px !important;
@@ -74,12 +86,11 @@ st.markdown(
     }
     
     .stButton>button:hover {
-        background-color: #8C6239 !important; /* Carton Brown on Hover */
+        background-color: #8C6239 !important;
         color: #FFFFFF !important;
         transform: translateY(-2px);
     }
 
-    /* Divider Lines */
     hr {
         border-color: #C4A482 !important;
     }
@@ -97,23 +108,27 @@ st.write(
 
 st.divider()
 
-# --- FABRIC DATABASE ---
+# --- FABRIC DATABASE WITH IMAGE URLS ---
 FABRIC_DETAILS = {
     "Brocade": {
         "stretchy": "Non-stretchy (Rigid & Structured)",
         "desc": "Rich, woven pattern that holds sharp silhouettes beautifully. Perfect for statement ceremonial wear.",
+        "image": "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=600&q=80",  # Replace with your own image URL or local path e.g. "images/brocade.jpg"
     },
     "Mikado": {
         "stretchy": "Non-stretchy (High Structure & Subtle Sheen)",
         "desc": "Heavyweight architectural fabric ideal for clean corporate cuts and tailored modest dresses.",
+        "image": "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?w=600&q=80",
     },
     "Jacquard": {
         "stretchy": "Non-stretchy / Low stretch",
         "desc": "Textured luxury fabric with subtle depth. Maintains crisp shapes throughout the workday.",
+        "image": "https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?w=600&q=80",
     },
     "Silk / Silk Satin": {
         "stretchy": "Low stretch / Bias-cut flexibility",
         "desc": "Smooth, fluid, and highly breathable. Drapes elegantly for evening wear and relaxed fits.",
+        "image": "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=600&q=80",
     },
 }
 
@@ -218,10 +233,18 @@ if submitted:
             f"Hi **{customer_name}**! Your recommended size for **Dresses by Emjay** is **{recommended_size}**."
         )
 
-        st.subheader("🧵 Fabric Stretch & Fit Analysis")
-        st.write(f"**Selected Fabric:** {fabric_choice}")
-        st.write(f"**Fabric Profile:** {fabric_info['desc']}")
-        st.info(stretch_advice)
+        st.subheader("🧵 Fabric Stretch & Texture Analysis")
+        
+        # Display Fabric Image and Text Side-by-Side using Columns
+        img_col, text_col = st.columns([1, 2])
+        
+        with img_col:
+            st.image(fabric_info["image"], caption=f"{fabric_choice} Texture Preview", use_container_width=True)
+            
+        with text_col:
+            st.write(f"**Selected Fabric:** {fabric_choice}")
+            st.write(f"**Fabric Profile:** {fabric_info['desc']}")
+            st.info(stretch_advice)
 
         st.subheader("✨ Accessory & Styling Guide")
         st.write(f"**Tailored for:** {event_choice} ({fit_choice})")
@@ -229,7 +252,7 @@ if submitted:
 
         st.divider()
 
-        # Build Pre-filled WhatsApp Message featuring all custom choices
+        # Build Pre-filled WhatsApp Message
         raw_message = (
             f"Hi Dresses by Emjay! My name is {customer_name} from {location}.\n\n"
             f"I used your SmartFit Advisor and here are my order details:\n"
@@ -247,7 +270,6 @@ if submitted:
             f"https://wa.me/{whatsapp_number}?text={encoded_message}"
         )
 
-        # Custom Dark Brown WhatsApp Action Button
         st.markdown(
             f"""
             <a href="{whatsapp_url}" target="_blank" style="text-decoration: none;">
