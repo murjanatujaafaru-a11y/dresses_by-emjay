@@ -112,29 +112,44 @@ st.write(
 
 st.divider()
 
-# --- FABRIC DATABASE USING LOCAL IMAGES ---
+# --- FABRIC DATABASE WITH LOCAL PATHS AND ONLINE FALLBACKS ---
 FABRIC_DETAILS = {
     "Brocade": {
         "stretchy": "Non-stretchy (Rigid & Structured)",
         "desc": "Rich, raised pattern woven with metallic or contrast threads that holds sharp silhouettes beautifully. Ideal for statement ceremonial wear.",
-        "image": "images/brocade.jpg",
+        "local_base": "images/brocade",
+        "fallback_url": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&q=80",
     },
     "Mikado": {
         "stretchy": "Non-stretchy (High Structure & Subtle Sheen)",
         "desc": "Heavyweight architectural silk-blend twill fabric ideal for clean corporate cuts, structured pleats, and tailored modest dresses.",
-        "image": "images/mikado.jpg",
+        "local_base": "images/mikado",
+        "fallback_url": "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?w=600&q=80",
     },
     "Jacquard": {
         "stretchy": "Non-stretchy / Low stretch",
         "desc": "Textured luxury fabric with subtle pattern depth woven directly into the weave. Maintains crisp shapes throughout the workday.",
-        "image": "images/jacquard.jpg",
+        "local_base": "images/jacquard",
+        "fallback_url": "https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?w=600&q=80",
     },
     "Silk / Silk Satin": {
         "stretchy": "Low stretch / Bias-cut flexibility",
         "desc": "Smooth, fluid, lustrous, and highly breathable. Drapes elegantly for evening wear, bias cuts, and relaxed fits.",
-        "image": "images/silk.jpg",
+        "local_base": "images/silk",
+        "fallback_url": "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=600&q=80",
     },
 }
+
+
+def resolve_image_path(base_path, fallback_url):
+    """Finds matching local image extension or defaults to online URL."""
+    extensions = [".jpg", ".png", ".jpeg", ".webp", ".JPG", ".PNG", ".JPEG", ".WEBP"]
+    for ext in extensions:
+        full_path = f"{base_path}{ext}"
+        if os.path.exists(full_path):
+            return full_path
+    return fallback_url
+
 
 # --- 1. CUSTOMER INPUT FORM ---
 with st.form("sizing_form"):
@@ -237,15 +252,17 @@ if submitted:
         img_col, text_col = st.columns([1, 2])
         
         with img_col:
-            img_path = fabric_info["image"]
-            if os.path.exists(img_path):
+            img_source = resolve_image_path(
+                fabric_info["local_base"], fabric_info["fallback_url"]
+            )
+            try:
                 st.image(
-                    img_path,
+                    img_source,
                     caption=f"{fabric_choice} Swatch",
                     use_container_width=True,
                 )
-            else:
-                st.info(f"📷 Please place `{img_path}` in your images folder.")
+            except Exception:
+                st.info("📷 Image preview unavailable.")
             
         with text_col:
             st.write(f"**Selected Fabric:** {fabric_choice}")
